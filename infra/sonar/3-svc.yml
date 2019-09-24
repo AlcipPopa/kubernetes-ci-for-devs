@@ -11,5 +11,7 @@ spec:
     name: web
     protocol: TCP
     targetPort: 9000
+    nodePort: 30900
   selector:
     app: sonar
+  type: NodePort

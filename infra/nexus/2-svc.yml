@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: nexus
-  name: nexus
+  name: nexus-web
   namespace: ci
 spec:
   ports:
@@ -11,9 +11,27 @@ spec:
     name: web
     protocol: TCP
     targetPort: 8081
+    nodePort: 30081
+  selector:
+    app: nexus
+  type: NodePort
+  
+---
+  
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nexus
+  name: nexus-repo
+  namespace: ci
+spec:
+  ports:
   - port: 10000
     name: registry
     protocol: TCP
     targetPort: 10000
+    nodePort: 31000
   selector:
     app: nexus
+  type: NodePort
