@@ -15,19 +15,10 @@ spec:
       labels:
         app: sonar
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
       initContainers:
-      - name: volume-mount-hack-data
-        image: busybox
-        command: ["sh", "-c", "chown -R 999:999 /opt/sonarqube/data"]
-        volumeMounts:
-        - name: sonar-persistent-storage
-          mountPath: /opt/sonarqube/data
-      - name: volume-mount-hack-extensions
-        image: busybox
-        command: ["sh", "-c", "chown -R 999:999 /opt/sonarqube/extensions"]
-        volumeMounts:
-        - name: sonar-persistent-storage
-          mountPath: /opt/sonarqube/extensions
       - name: increase-vm-max-map
         image: busybox
         command: ["sysctl", "-w", "vm.max_map_count=262144"]
